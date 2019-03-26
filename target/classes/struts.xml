@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="departs" extends="struts-default" namespace="/">
+		<action name="dashboardAdmin"
+			class="com.struts.controller.DepartsActionController"
+			method="departs">
+			<result name="success">Admin/index.jsp</result>
+		</action>
+		<action name="addDeparts"
+			class="com.struts.controller.DepartsActionController"
+			method="addDeparts">
+			<result name="success">content/addDeparts.jsp</result>
+		</action>
+	</package>
+	<package name="admin" extends="struts-default" namespace="/">
+		<action name="checkLogin"
+			class="com.struts.controller.UserActionController"
+			method="checkLogin1">
+			<result name="success" type="redirectAction">
+				<param name="actionName">dashboardAdmin</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="error">Admin/index.jsp</result>
+		</action>
+	</package>
+</struts>
