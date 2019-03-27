@@ -14,6 +14,7 @@ import lombok.Setter;
 public class DepartsActionController extends ActionSupport {
 	private static final long serialVersionUID = 2156794792864214519L;
 	private String nameDeparts;
+	private java.lang.Integer idDeparts;
 	private DepartServicesImpl departServicesImpl = new DepartServicesImpl();
 	private List<Departs> departs;
 
@@ -40,8 +41,21 @@ public class DepartsActionController extends ActionSupport {
 		}
 
 	}
-//	public String getListDeparts() {
-//		departServicesImpl.listDeparts();
-//	}
+
+	public String removeDepartsById() {
+		if ("Success".equals(departServicesImpl.deleteDeparts(getIdDeparts()))) {
+			return SUCCESS;
+		} else {
+			return ERROR;
+		}
+	}
+
+	public String editDeparts() {
+		if ("Success".equals(departServicesImpl.editDeparts(getIdDeparts(), getNameDeparts()))) {
+			return SUCCESS;
+		} else {
+			return ERROR;
+		}
+	}
 
 }

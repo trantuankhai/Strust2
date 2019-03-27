@@ -2,7 +2,6 @@ package com.struts.dao;
 
 import java.util.List;
 
-import com.struts.*;
 import com.struts.model.Departs;
 
 

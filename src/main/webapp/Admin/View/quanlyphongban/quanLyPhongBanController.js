@@ -46,5 +46,11 @@ appAdmin.controller('quanlyphongbancontroller', function($scope, $rootScope,
 		}
 	};
 
-	// }
+	$scope.deleteDeparts = function(list)
+	{
+		$scope.listTemp = {
+			'name_departs' : list.name_departs,
+			"id_departs" : list.id_departs
+		}
+	};
 });

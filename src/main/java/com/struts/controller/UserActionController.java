@@ -18,8 +18,11 @@ public class UserActionController extends ActionSupport {
 
 	public String checkLogin1() {
 		if (userServicesImpl.checkLogin(getUserName(), getPassWord()) == "success") {
+
 			return SUCCESS;
 		} else {
+			String message = getText("error.login");
+			addActionError(message);
 			return ERROR;
 		}
 	}

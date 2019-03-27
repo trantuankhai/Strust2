@@ -2,7 +2,6 @@ package com.struts.dao;
 
 import java.util.List;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -20,6 +19,7 @@ public class StaffsDaoImpl implements StaffsDao {
 	private final Logger logger = LogManager.getLogger(StaffsDaoImpl.class);
 	private Transaction transaction = null;
 
+	@SuppressWarnings("unchecked")
 	public List<Staffs> listStaffs() {
 		Session session = sessionFactory.openSession();
 		List<Staffs> staffs = null;
@@ -112,6 +112,7 @@ public class StaffsDaoImpl implements StaffsDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Staffs> layKhoangNhanVien(int max) {
 		Session session = sessionFactory.openSession();
 		List<Staffs> staffs = null;
@@ -132,6 +133,7 @@ public class StaffsDaoImpl implements StaffsDao {
 		return staffs;
 	}
 
+	@SuppressWarnings("unchecked")
 	public long sumPage(long showOnePage) {
 		long page = 0;
 		Session session = sessionFactory.openSession();
@@ -155,6 +157,7 @@ public class StaffsDaoImpl implements StaffsDao {
 		return page;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Staffs> chuyenHuongTrang(int min, int max) {
 		Session session = sessionFactory.openSession();
 		List<Staffs> staffs = null;
@@ -174,7 +177,7 @@ public class StaffsDaoImpl implements StaffsDao {
 		}
 		return staffs;
 	}
-
+	@SuppressWarnings("unchecked")
 	public List<StaffsExtend> top10Staffs() {
 		Session session = sessionFactory.openSession();
 		List<StaffsExtend> list = null;

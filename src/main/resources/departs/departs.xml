@@ -11,8 +11,21 @@
 			<result name="success" type="json"></result>
 		</action>
 	</package>
-	<package name="addDeparts" extends="struts" namespace="/">
-	<action name="addDeparts" class="com.struts.controller.DepartsActionController" method="addDeparts">
-	</action>
+	<package name="Departs" extends="struts-default" namespace="/">
+		<action name="addDeparts"
+			class="com.struts.controller.DepartsActionController"
+			method="addDeparts">
+			<result name="success">Admin/index.jsp</result>
+		</action>
+		<action name="removeDeparts"
+			class="com.struts.controller.DepartsActionController"
+			method="removeDepartsById">
+			<result name="success">Admin/index.jsp</result>
+		</action>
+		<action name="editDeparts"
+			class="com.struts.controller.DepartsActionController"
+			method="editDeparts">
+			<result name="success">Admin/index.jsp</result>
+			</action>
 	</package>
 </struts>

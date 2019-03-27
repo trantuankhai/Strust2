@@ -105,6 +105,9 @@ span.icon1, span.icon2 {
     position: absolute;
     right: 6%;
 }
+span {
+	color :red;
+}
 span.icon1 {
     top: 23%;
 }

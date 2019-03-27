@@ -15,12 +15,12 @@ public class DepartServicesImpl implements DepartsServises {
 
 	public String deleteDeparts(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return departsDaoImpl.deleteDeparts(id);
 	}
 
 	public String editDeparts(int id, String name) {
 		// TODO Auto-generated method stub
-		return null;
+		return departsDaoImpl.editDeparts(id, name);
 	}
 
 	public List<com.struts.model.Departs> listDeparts() {
