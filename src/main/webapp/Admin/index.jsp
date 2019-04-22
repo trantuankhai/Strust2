@@ -19,7 +19,12 @@
 <link href="Admin/css/app/admin-styles.css" rel="stylesheet"
 	type="text/css" />
 <link href="Admin/css/app/styles.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+	rel="stylesheet">
+ <link href="https://cdn.datatables.net/autofill/2.3.3/css/autoFill.bootstrap4.min.css"
+	rel="stylesheet"> 
 <script src="Admin/ckeditor/ckeditor.js"></script>
+
 
 <!-- Custom CSS -->
 </head>
@@ -29,8 +34,8 @@
 		<div class="headerbar">
 			<!-- LOGO -->
 			<div class="headerbar-left">
-				<a href="#!" class="logo"><img alt="Logo" src="Admin/images/logo.png" />
-					<span>Admin</span></a>
+				<a href="#!" class="logo"><img alt="Logo"
+					src="Admin/images/logo.png" /> <span>Admin</span></a>
 			</div>
 			<nav class="navbar-custom">
 				<ul class="list-inline float-right mb-0">
@@ -49,7 +54,8 @@
 					<li class="list-inline-item dropdown notif"><a
 						class="nav-link dropdown-toggle nav-user" data-toggle="dropdown"
 						role="button" aria-haspopup="false" aria-expanded="false"> <img
-							src="Admin/images/avata.jpg" alt="Profile image" class="avatar-rounded">
+							src="Admin/images/avata.jpg" alt="Profile image"
+							class="avatar-rounded">
 					</a>
 						<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 							<!-- item-->
@@ -93,13 +99,11 @@
 								class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a></li>
 						<li class="submenu"><a href="#!quan-ly-phong-ban"><i
 								class="fa fa-bank"></i><span> {{listLanguage.lblDeparts}}
-							</span> </a> 
-						</li>
+							</span> </a></li>
 
 						<li class="submenu"><a href="#!quan-ly-nhan-vien"><i
 								class="fa fa-users"></i><span> {{listLanguage.lblStaffs}}
-							</span> </a> 
-						</li>
+							</span> </a></li>
 						<li class="submenu"><a><i class="fa fa-line-chart"></i> <span>
 									{{listLanguage.lblThongKe}}</span> <span class="menu-arrow"></span></a>
 							<ul class="list-unstyled">
@@ -137,7 +141,8 @@
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<!-- END main -->
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/autofill/2.3.3/js/autoFill.bootstrap4.min.js"></script> 
 	<script src="Admin/js/lib/popper.min.js"></script>
 	<script src="Admin/js/lib/bootstrap.min.js"></script>
 	<!-- App js -->
@@ -146,9 +151,10 @@
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-	<!-- CUSTOM JS -->
-	<script src="Admin/js/app/admin.js"></script>        
-        <script src="Admin/View/quanlyphongban/quanLyPhongBanController.js"></script>
-        <script src="Admin/View/quanlynhanvien/quanLyNhanVienController.js"></script>
+	<script src="Admin/js/app/admin.js"></script>
+	<script src="Admin/View/quanlyphongban/quanLyPhongBanServices.js"></script>
+	<script src="Admin/View/quanlyphongban/quanLyPhongBanController.js"></script>
+	<script src="Admin/View/quanlynhanvien/quanLyNhanVienServices.js"></script>
+	<script src="Admin/View/quanlynhanvien/quanLyNhanVienController.js"></script>
 </body>
 </html>

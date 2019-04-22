@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.struts.model.Departs;
 
-
 public interface DeapartsDAO {
 	public List<Departs> listDeparts();
 
@@ -20,6 +19,6 @@ public interface DeapartsDAO {
 
 	public long countStaffsInDeparts(int id);
 
-//	public List<DepartsExtend> thanhTichPhongBan(int min ,int max);
+	Departs getDepartById(Integer id_departs);
 
 }

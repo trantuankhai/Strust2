@@ -24,6 +24,11 @@
 			<result name="error">Login/index.jsp</result>
 		</action>
 	</package>
+	<package name="404Page" extends="struts-default" namespace="/">
+	<action name="404Page" class="com.struts.controller.errorPageActionController" method="show404Page">
+		<result name="success">404Page/index.html</result>
+	</action>
+	</package>
 	<include file="departs/departs.xml"></include>
 	<include file="staffs/staffs.xml"></include>
 </struts>

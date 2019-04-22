@@ -1,7 +1,6 @@
 package com.struts.dao;
 
 import com.struts.model.Staffs;
-import com.struts.model.StaffsExtend;
 
 import java.util.*;
 
@@ -22,6 +21,6 @@ public interface StaffsDao {
 
 	public List<Staffs> chuyenHuongTrang(int min, int max);
 
-	public List<StaffsExtend> top10Staffs();
+	public List<Staffs> getListStaffsByIdDepart(Integer id_departs);
 
 }

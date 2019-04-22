@@ -19,4 +19,6 @@ public interface DepartsServises {
 
 	public long countStaffsInDeparts(int id);
 
+	Departs getDepartById(Integer id_departs);
+
 }

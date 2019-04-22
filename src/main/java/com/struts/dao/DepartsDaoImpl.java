@@ -2,6 +2,7 @@ package com.struts.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +12,8 @@ import com.struts.model.Departs;
 
 public class DepartsDaoImpl implements DeapartsDAO {
 	private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-@SuppressWarnings("unchecked")
+	private Logger logger = Logger.getLogger(DepartsDaoImpl.class);
+	@SuppressWarnings("unchecked")
 	public List<Departs> listDeparts() {
 		Session session = sessionFactory.openSession();
 		List<Departs> listDeparts = null;
@@ -105,6 +107,28 @@ public class DepartsDaoImpl implements DeapartsDAO {
 	public long countStaffsInDeparts(int id) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public Departs getDepartById(Integer id_departs) {
+		Session session = sessionFactory.openSession();
+		Departs departs = null;
+		try {
+			logger.debug("Start get depart by id");
+			session.getTransaction().begin();
+			departs = session.get(Departs.class, id_departs);
+			session.getTransaction().commit();
+			logger.debug("end get depart by id");
+		} catch (Exception e) {
+			if(session.getTransaction() !=null)
+			{
+				session.getTransaction().rollback();
+			}
+			logger.debug("get depart by id error at controller");
+			return null;
+		}finally {
+			session.close();
+		}
+		return departs;
 	}
 
 }

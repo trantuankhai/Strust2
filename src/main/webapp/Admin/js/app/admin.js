@@ -1,6 +1,10 @@
   
 'use strict'
-var appAdmin = angular.module('adminApp', ['ngRoute']);
+var appAdmin = angular.module('adminApp', ['ngRoute','managerDepartsServices','managerStaffServices']);
+appAdmin.run( function($rootScope){
+  $rootScope.linkApi = 'http://localhost:8080/assgment/';       
+  
+});
 appAdmin.directive('fileModel', ['$parse', function ($parse) {
     return {
        restrict: 'A',
@@ -15,52 +19,6 @@ appAdmin.directive('fileModel', ['$parse', function ($parse) {
        }
     }; 
 }]);
- //  $scope.en  = 
- //  {
- //    'lblShowHot' : 'Dashboard',
- //    'lblQuanLyPhongBan': 'Departs Manager',
- //    'lblQuanLyNhanVien':'Staffs Manager',
- //    'lblThongKe':'Dashboard Records',
- //    'lblThongKeTheoNhanVien':'Dashboard By Staffs',
- //    'lblThongKeTheoPhongBan':' Dashboard By Departs'
- // }
-
-          appAdmin.directive('sideBar',function(){
-            return{
-              restrict:'AE',
-              template:'<div class="left main-sidebar">'
-                
-                +'<div class="sidebar-inner leftscroll">'
-                   +'<div id="sidebar-menu">'
-                        
-                       +'<ul>'
-                            +'<li class="submenu">'
-                                +'<a class="active" href="index.html"><i class="fa fa-fw fa-bars"></i><span>{{lblShowHot}} </span> </a>'
-                            +'</li>'
-                            +'<li class="submenu" >'
-                                +'<a href="#!quan-ly-phong-ban"><i class="fa fa-bank"></i><span> {{lblQuanLyPhongBan}} </span> </a>'
-                            +'</li>'
-                            
-                            +'<li class="submenu" >'
-                                +'<a href="#!quan-ly-nhan-vien"><i class="fa fa-users"></i><span>{{lblQuanLyNhanVien}} </span> </a>'
-                           + '</li>'
-                            
-                            +'<li class="submenu">'
-                                +'<a><i class="fa fa-line-chart"></i> <span> {{lblThongKe}} </span> <span class="menu-arrow"></span></a>'
-                                +'<ul class="list-unstyled" >'
-                                    +'<li ><a href="#!thong-ke-thanh-tich-nhan-vien">{{lblThongKeTheoNhanVien}}</a></li>'
-                                    +'<li ><a href="#!thong-ke-thanh-tich-phong-ban">{{lblThongKeTheoPhongBan}}</a></li>'
-                                +'</ul>'
-                            +'</li>'
-                        +'</ul>'
-                        +'<div class="clearfix"></div>'
-                    +'</div>'
-                    
-                    +'<div class="clearfix"></div>'
-                +'</div>'
-            +'</div>'
-            }
-                 })
 appAdmin.filter('foreach', function () {
     return function (input) {
         var lowBound, highBound;

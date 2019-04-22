@@ -8,5 +8,17 @@
 			class="com.struts.controller.StaffsActionController">
 			<result name="success" type="json"></result>
 		</action>
+		<action name="editStaff" method="editStaff"
+			class="com.struts.controller.StaffsActionController">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="addStaff" method="addStaff"
+			class="com.struts.controller.StaffsActionController">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="removeStaff" method="removeStaff"
+			class="com.struts.controller.StaffsActionController">
+			<result name="success" type="json"></result>
+		</action>
 	</package>
 </struts>

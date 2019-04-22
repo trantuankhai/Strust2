@@ -3,29 +3,65 @@
    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.enable.DynamicMethodInvocation"
+		value="false" />
 	<package name="listDeparts" extends="json-default"
 		namespace="/">
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.struts.interceptor.AuthorizationInterceptor"></interceptor>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">Login/index.jsp</result>
+		</global-results>
 		<action name="listDeparts"
 			class="com.struts.controller.DepartsActionController"
 			method="listDeparts">
+			<interceptor-ref name="authentication"></interceptor-ref>
 			<result name="success" type="json"></result>
 		</action>
 	</package>
-	<package name="Departs" extends="struts-default" namespace="/">
+	<package name="Departs" extends="json-default" namespace="/">
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.struts.interceptor.AuthorizationInterceptor"></interceptor>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="authStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">Login/index.jsp</result>
+		</global-results>
 		<action name="addDeparts"
 			class="com.struts.controller.DepartsActionController"
 			method="addDeparts">
-			<result name="success">Admin/index.jsp</result>
+			<!-- <interceptor-ref name="authentication"></interceptor-ref> -->
+			<result type="json"></result>
 		</action>
 		<action name="removeDeparts"
 			class="com.struts.controller.DepartsActionController"
 			method="removeDepartsById">
-			<result name="success">Admin/index.jsp</result>
+			<!-- <interceptor-ref name="authentication"></interceptor-ref> -->
+			<result name="success" type="json"></result>
+			<!-- Redirect to another namespace -->
+			<result type="redirectAction" name="input">
+				<param name="actionName">404Page</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 		<action name="editDeparts"
 			class="com.struts.controller.DepartsActionController"
 			method="editDeparts">
-			<result name="success">Admin/index.jsp</result>
-			</action>
+			<!-- <interceptor-ref name="authentication"></interceptor-ref> -->
+			<result name="success" type="json"></result>
+		</action>
 	</package>
 </struts>

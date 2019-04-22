@@ -15,12 +15,12 @@ angular.module('managerStaffServices',[]).factory('quanlynhanvienservices',['$ht
     return services;
 
 		function getListStaffs(){
-			var url = $rootScope.linkApi+"staffs";
+			var url = $rootScope.linkApi+"listStaffs.action";
 			return $http.get(url);
 				
 			};
 		function getAllDeparts(){
-        var url = $rootScope.linkApi+"departs";
+        var url = $rootScope.linkApi+"listDeparts.action";
         return $http.get(url);
     	};
 
@@ -28,11 +28,10 @@ angular.module('managerStaffServices',[]).factory('quanlynhanvienservices',['$ht
 			var url = $rootScope.linkApi + "staffs/About/"+sl
 			return $http.get(url);
 		};
-		function addStaffs1(dataStaffs){
+		function addStaffs1(id_departs,name_staff,gender,birthday,email,phone,note){
 			var req = {
-                method: 'POST',
-                url :$rootScope.linkApi+"staffs",
-            	data : dataStaffs	
+                method: 'GET',
+                url :$rootScope.linkApi+"addStaff?id_departs="+id_departs+"&name_staff="+name_staff+"&gender="+gender+"&birthday="+birthday+"&email="+email+"&phone="+phone+"&note="+note,
             }
 			
 			return $http(req);
@@ -66,30 +65,16 @@ angular.module('managerStaffServices',[]).factory('quanlynhanvienservices',['$ht
 
 			}
 
-		function updateStaff(id_staffs,dataStaffs){
+		function updateStaff(id_staffs,id_departs,name_staff,gender,birthday,email,phone,note){
 				 var req = {
-                method: 'PUT',
-                url:$rootScope.linkApi+'staffs/'+id_staffs,
-                data: dataStaffs,
-               headers: {
-                'Accept': 'text/html',
-                'Content-Type': 'application/json'
-          	  }
+                method: 'GET',
+                url:$rootScope.linkApi+"editStaff?id="+id_staffs+"&id_departs="+id_departs+"&name_staff="+name_staff+"&gender="+gender+"&birthday="+birthday+"&email="+email+"&phone="+phone+"&note="+note,
             }
 			 return $http(req);	
 			};
 
 		function deleteStaffs(id_staffs){
-			    var req = {
-                method: 'DELETE',
-                url:$rootScope.linkApi+'staffs/'+id_staffs,
-                data:null,
-               headers: {
-                'Accept': 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8',
-                'Content-Type': 'application/json'
-            }
-            }
-        return $http(req);
+        return $http.get($rootScope.linkApi+'removeStaff.action?id='+id_staffs);
 
 				
 			};

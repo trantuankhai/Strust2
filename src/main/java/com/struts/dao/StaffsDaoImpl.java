@@ -2,8 +2,7 @@ package com.struts.dao;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,11 +11,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import com.struts.model.Staffs;
-import com.struts.model.StaffsExtend;
 
 public class StaffsDaoImpl implements StaffsDao {
 	private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-	private final Logger logger = LogManager.getLogger(StaffsDaoImpl.class);
+	private final Logger logger = Logger.getLogger(StaffsDaoImpl.class.getName());
 	private Transaction transaction = null;
 
 	@SuppressWarnings("unchecked")
@@ -94,8 +92,7 @@ public class StaffsDaoImpl implements StaffsDao {
 		Session session = sessionFactory.openSession();
 		try {
 			transaction = session.beginTransaction();
-			Staffs staffs2 = session.get(Staffs.class, id);
-			session.delete(staffs2);
+			session.delete(session.get(Staffs.class, id));
 			transaction.commit();
 			return "Success";
 		} catch (HibernateException e) {
@@ -177,58 +174,6 @@ public class StaffsDaoImpl implements StaffsDao {
 		}
 		return staffs;
 	}
-	@SuppressWarnings("unchecked")
-	public List<StaffsExtend> top10Staffs() {
-		Session session = sessionFactory.openSession();
-		List<StaffsExtend> list = null;
-		StringBuilder subQuery = new StringBuilder();
-		subQuery.append("SELECT");
-		subQuery.append("	s.id_staffs,");
-		subQuery.append("	d.name_departs,");
-		subQuery.append("	s.name,");
-		subQuery.append("	s.gender,");
-		subQuery.append("	s.birthday,");
-		subQuery.append("	s.photo,");
-		subQuery.append("	s.email,");
-		subQuery.append("	s.rank_staff,");
-		subQuery.append("	s.phone,");
-		subQuery.append("	s.salary,");
-		subQuery.append("	s.note,");
-		subQuery.append("	sum(r.records_Type) as tong");
-		subQuery.append("	from");
-		subQuery.append("	Staffs s");
-		subQuery.append("	left join");
-		subQuery.append("	Departs d");
-		subQuery.append("	on");
-		subQuery.append("	s.departs.id_departs");
-		subQuery.append("	= d.id_departs");
-		subQuery.append("	left join");
-		subQuery.append("	Records r");
-		subQuery.append("	on");
-		subQuery.append("	s.id_staffs");
-		subQuery.append("	= r.staffs.id_staffs");
-		subQuery.append("	group by");
-		subQuery.append(
-				"	s.id_staffs,d.name_departs,s.name,s.gender,s.birthday,s.photo,s.email,s.rank_staff,s.phone,s.salary,s.note");
-		subQuery.append("	ORDER BY");
-		subQuery.append("	tong desc");
-		System.out.println(subQuery.toString());
-		try {
-			transaction = session.beginTransaction();
-			list = session.createQuery(subQuery.toString()).setFirstResult(0).setMaxResults(10).list();
-			transaction.commit();
-
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			if (transaction != null) {
-				transaction.rollback();
-			}
-		} finally {
-			session.close();
-		}
-		return list;
-
-	}
 
 	public Staffs getStaffsById(Integer id) {
 		Session session = sessionFactory.openSession();
@@ -242,6 +187,25 @@ public class StaffsDaoImpl implements StaffsDao {
 				transaction.rollback();
 			}
 			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return staffs;
+	}
+
+	public List<Staffs> getListStaffsByIdDepart(Integer id_departs) {
+		Session session = sessionFactory.openSession();
+		List<Staffs> staffs = null;
+		try {
+			session.getTransaction().begin();
+			staffs = session.createQuery("from Staffs s where s.departs.id_departs =: id_departs")
+					.setParameter("id_departs", id_departs).list();
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			if (session.getTransaction() != null) {
+				session.getTransaction().rollback();
+			}
+			staffs = null;
 		} finally {
 			session.close();
 		}

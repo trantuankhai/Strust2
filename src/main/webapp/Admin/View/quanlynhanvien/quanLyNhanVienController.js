@@ -1,17 +1,105 @@
 'use strict'
-appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $window, $http){
+appAdmin.controller('quanlynhanviencontroller', function($scope ,quanlynhanvienservices, $rootScope, $window, $http){
 	$scope.checkEdit = false;
 	$scope.checkAdd = false;
 	$scope.checkView = false;
 	$scope.checkNote = false;
 	$scope.changeStaffs = 10;
 	$scope.showOnePage = 10;
-	$http.get('http://localhost:8080/assgment/listStaffs').then(
-			function(res){
-				$scope.listStaffs = res.data;
-			},function(error){
-				console.log(error);
-			});
+	quanlynhanvienservices.getAllDeparts().then(function(res){
+		$scope.listDeparts = res.data;
+
+	},function(error){
+
+	});
+	quanlynhanvienservices.getListStaffs().then(function(res){
+		$scope.listStaffs = res.data;
+	},function(error){
+		console.log(error);
+	});
+	$scope.showEdit = function(list) {
+		$scope.listStaffsTemp = {
+			'id_staff' : list.id_staffs,
+			'id_departs' : list.departs.id_departs,
+			'name_staffs' : list.name,
+			'gender_staffs' : list.gender,
+			'birthday_staffs' : list.birthday,
+			'email_staffs' : list.email,
+			'phone_staffs' : list.phone,
+			'note_staffs' : list.note
+		}
+
+	}
+$scope.addNhanVien = function()
+	{
+	quanlynhanvienservices.addStaffs1($scope.id_departs,$scope.name_staff,$scope.gender,$scope.birthday,$scope.email,$scope.phone,$scope.note).then(function(res){
+		$scope.listStaffs = res.data;
+		$('#addNhanvien').modal('toggle');
+		alert('Add Staff Success');
+	},function(error){
+		
+	});
+	}
+	$scope.showRemove = function(x, y) {
+		$scope.id_staff = y;
+		$scope.name_staff = x;
+	}
+	$scope.removeStaff = function(){
+		quanlynhanvienservices.deleteStaffs($scope.id_staff).then(function(res){
+			$scope.listStaffs = res.data;
+			$('#deleteNhanvien').modal('toggle');
+			alert('Remove Staff Success');
+		},function(error){
+			console.log(error);
+
+		})
+
+};
+$scope.editStaff = function()
+
+	{
+	quanlynhanvienservices.updateStaff($scope.listStaffsTemp.id_staff,$scope.listStaffsTemp.id_departs,$scope.listStaffsTemp.name_staffs,$scope.listStaffsTemp.gender_staffs,$scope.listStaffsTemp.birthday_staffs,$scope.listStaffsTemp.email_staffs,$scope.listStaffsTemp.phone_staffs,$scope.listStaffsTemp.note_staffs).then(function(res){
+		$scope.listStaffs = res.data;
+		$('#editNhanvien').modal('toggle');
+		$scope.listStaffsTemp = {
+				'id_staff' : list.id_staffs,
+				'id_departs' : list.departs.id_departs,
+				'name_staffs' : list.name,
+				'gender_staffs' : list.gender,
+				'birthday_staffs' : list.birthday,
+				'email_staffs' : list.email,
+				'phone_staffs' : list.phone,
+				'note_staffs' : list.note
+			}
+		alert('Update Staff Success');
+	},function(error){
+		
+	})
+	}
+	$scope.showChange = function(){
+		quanlynhanvienservices.getAboutStaffs($scope.changeStaffs).then(function(res){
+			$scope.listStaffs = res.data;
+		quanlynhanvienservices.sumpage($scope.changeStaffs).then(function(res){
+		$scope.sumPage = res.data;
+	},function(error){
+
+	});
+
+		},function(error){
+
+		})
+	}
+	$scope.redirectPage = function(index){
+		var page = index*$scope.showOnePage;
+		quanlynhanvienservices.redirectPage(page,$scope.showOnePage).then(function(res){
+			$scope.listStaffs = res.data;
+		})
+
+
+	}
+		$scope.boQua = function(){
+				clear();
+		}
 	function clear(){
 				$scope.tempStaffs = {
 					    "id_staffs":null,
@@ -32,11 +120,15 @@ appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $wi
 
 			}
 		$scope.showAddStaffs = function(){
-			$scope.checkAdd = true;
-			$scope.checkView = false;
-			$scope.checkEdit = false;
-			$scope.checkNote = false;
-			clear();
+			$scope.name_staff = "";
+			$scope.gender = 1;
+			$scope.birthday = "";
+			$scope.id_departs = 4;
+			$scope.email = "";
+			$scope.phone = "";
+			$scope.note = "";
+//			alert(1);
+			
 		};
 		$scope.showNote = function(list){
 			$scope.checkNote = true;
@@ -58,30 +150,6 @@ appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $wi
 			$scope.tempStaffs.phone = "";
 			$scope.tempStaffs.note="";
 
-		};
-			$scope.showEditStaffs = function(list){
-			$scope.checkEdit = true;
-			$scope.checkAdd = false;
-			$scope.checkView = false;
-			$scope.checkNote = false;
-			$scope.listTemp = list;
-			$scope.avatar = list.photo;
-			$scope.tempStaffs = {
-								    "id_staffs": list.id_staffs,
-								    "departs": {
-								      "id_departs": list.departs.id_departs,
-								      "name_departs":list.departs.name_departs
-								    },
-								    "name": list.name,
-								    "gender": list.gender,
-								    "birthday": list.birthday,
-								    "photo": list.photo,
-								    "email": list.email,
-								    "phone": list.phone,
-								    "salary": list.salary,
-								    "rank_staff": list.rank_staff,
-								    "note": list.note
-					 			 }
 		};
 		$scope.showViewStaffs = function(list){
 			$scope.checkView = true;
@@ -105,24 +173,7 @@ appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $wi
 									    "note": list.note
 					  			}
 		};
-		$scope.deleteStaffs = function(list,index){
-			if(confirm("Bạn có muốn xóa nhân viên không ?")){
-				quanlynhanvienservices.deleteStaffs(list.id_staffs).then(function(res){
-					console.log(res.data);
-					$scope.listStaffs.splice(index,1);
-					quanlynhanvienservices.sumpage($scope.showOnePage).then(function(res){
-						$scope.sumPage = res.data;
-					},function(error){
 
-					});
-				},function(error){
-					console.log(error);
-
-				})
-			}else{
-
-			}
-		};
 		$scope.noteStaffs = function(){
 			var date = new Date();
 			var dateStr = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
@@ -136,7 +187,8 @@ appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $wi
 			
 		}
 		$scope.addStaffs = function(){
-				  $scope.Staffs ={
+			var	  staffs1 ={
+							"staffs":{
 							  "birthday": $scope.tempStaffs.birthday,
 							  "departs": {
 							    "id_departs": $scope.tempStaffs.departs.id_departs,
@@ -152,26 +204,28 @@ appAdmin.controller('quanlynhanviencontroller', function($scope, $rootScope, $wi
 							  "rank_staff":$scope.tempStaffs.rank_staffs,
 							  "salary": $scope.tempStaffs.salary
 							}
+						}
+						console.log(staffs1);
 
-		               var config =  {
-			                'Accept': 'text/html',
-			           		'Content-Type': 'application/json'
-		            		}
-					quanlynhanvienservices.addStaffs1($scope.Staffs).then(function(res){
+		              //  var config =  {
+			             //    'Accept': 'text/html',
+			           		// 'Content-Type': 'application/json'
+		            		// }
+					quanlynhanvienservices.addStaffs1(staffs1).then(function(res){
 					console.log(res.data);
-					if(res.data === -1){
-						alert("Thêm Nhân Viên Thất Bại");
-					}else{
-							$scope.Staffs.id_staffs=res.data;
-							quanlynhanvienservices.uploadAvatar($scope.tempStaffs.photo).then(function(res){
-									$scope.listStaffs.push($scope.Staffs);
-									$('#nhanvien').modal('toggle');
+					// if(res.data === -1){
+					// 	alert("Thêm Nhân Viên Thất Bại");
+					// }else{
+					// 		$scope.Staffs.id_staffs=res.data;
+					// 		quanlynhanvienservices.uploadAvatar($scope.tempStaffs.photo).then(function(res){
+					// 				$scope.listStaffs.push($scope.Staffs);
+					// 				$('#nhanvien').modal('toggle');
 
-						},function(error){
-							console.log(error)
+					// 	},function(error){
+					// 		console.log(error)
 
-						});
-					}
+					// 	});
+					// }
 
 				},function(error){
 					console.log(error);
